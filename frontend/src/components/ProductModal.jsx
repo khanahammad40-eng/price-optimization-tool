@@ -55,7 +55,7 @@ export default function ProductModal({ product, onClose, onSave }) {
               <label className="form-label">Product Name *</label>
               <input className="input" name="name" value={form.name}
                 onChange={handleChange} placeholder="e.g. Wireless Earbuds" required />
-            </div>
+            </div> 
 
             <div className="form-group">
               <label className="form-label">Category</label>

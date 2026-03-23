@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Pricing from './pages/Pricing';
+import VerifyEmail from './pages/VerifyEmail';
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="/products" element={<PrivateRoute><Products /></PrivateRoute>} />
             <Route path="/pricing" element={<PrivateRoute><Pricing /></PrivateRoute>} />
             <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
           </Routes>
         </ToastProvider>
       </AuthProvider>
