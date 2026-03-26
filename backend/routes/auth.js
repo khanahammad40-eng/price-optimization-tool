@@ -187,5 +187,32 @@ router.get('/verify-email', async (req, res) => {
 
   res.json({ message: 'Email verified successfully! You can now log in.' });
 });
+// GET /api/auth/my-permissions — get current logged-in user's permissions
+router.get('/my-permissions', verifyToken, async (req, res) => {
+  try {
+    const result = await pool.query(
+      `SELECT can_create, can_read, can_update, can_delete
+       FROM roles
+       WHERE role_name = $1`,
+      [req.user.role]
+    );
 
+    if (result.rows.length === 0) {
+      // role not found in roles table — give minimum access
+      return res.json({
+        can_create: false,
+        can_read: true,
+        can_update: false,
+        can_delete: false,
+      });
+    }
+
+    res.json(result.rows[0]);
+    // example response:
+    // { can_create: true, can_read: true, can_update: true, can_delete: true }
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = router;
